@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent parent = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
         primaryStage.setTitle("FindTheCouples");
-        primaryStage.setScene(new Scene(parent, 300, 275));
+        primaryStage.setScene(new Scene(parent, 800, 600));
         primaryStage.getIcons().add(new Image("resources/images/main-icon.png"));
         primaryStage.show();
     }
