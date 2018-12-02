@@ -53,8 +53,9 @@ public class PlayField {
             return;
 
         if(card.getCardId() == lastSelectedCard.getCardId()) {
-            lastSelectedCard = null;
             card.setFound(true);
+            lastSelectedCard.setFound(true);
+            lastSelectedCard = null;
         } else {
             lastSelectedCard = null;
         }
@@ -66,6 +67,10 @@ public class PlayField {
 
     public int getNumberOfCardsVertical() {
         return numberOfCardsVertical;
+    }
+
+    public Card getLastSelectedCard() {
+        return lastSelectedCard;
     }
 
     public List<Card> getCards() {

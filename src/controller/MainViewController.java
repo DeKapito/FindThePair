@@ -71,8 +71,26 @@ public class MainViewController {
     private EventHandler clickOnCardHandler(Card card, ImageView imageView) {
         return e -> {
             playField.openCard(card);
-
             imageView.setImage(card.getImageFile());
+
+            new Thread(() -> {
+                if(playField.getLastSelectedCard() == null) {
+                    fieldGridPane.setDisable(true);
+
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    for(Card cardMap : cardImageViewMap.keySet()) {
+                        if(!cardMap.isFound()) {
+                            cardImageViewMap.get(cardMap).setImage(playField.getHiddenCardImage());
+                        }
+                    }
+                    fieldGridPane.setDisable(false);
+                }
+            }).start();
         };
     }
 }
