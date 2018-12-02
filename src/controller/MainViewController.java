@@ -2,19 +2,21 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import service.ImageOpener;
+import model.Card;
+import model.PlayField;
 
-import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainViewController {
 
@@ -26,31 +28,48 @@ public class MainViewController {
 
     private GridPane fieldGridPane;
 
-    @FXML
-    private void initialize() {
-        Platform.runLater(() -> createGrid(mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty()));
+    private PlayField playField;
+    private List<Card> cards;
+    private Map<Card, ImageView> cardImageViewMap = new HashMap<>();
+
+    public MainViewController() {
+        playField = new PlayField(5, 4);
+        cards = playField.getCards();
     }
 
-    private void createGrid(ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
+    @FXML
+    private void initialize() {
+        Platform.runLater(() -> createGrid(playField, mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty()));
+    }
+
+    private void createGrid(PlayField playField, ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
         fieldGridPane = new GridPane();
         fieldGridPane.setPadding(new Insets(10));
 
-        ImageOpener imageOpener = new ImageOpener();
-        List<URI> images = imageOpener.getCardImages();
+        int index = 0;
+        for (int i = 0; i < playField.getNumberOfCardsHorizontal(); i++) {
+            for(int k = 0; k < playField.getNumberOfCardsVertical(); k++) {
+                ImageView imageView = new ImageView(cards.get(index).getImageFile());
+                imageView.fitWidthProperty().bind(heightProperty.divide(5));
+                imageView.fitHeightProperty().bind(heightProperty.divide(5));
 
-        for (int i = 0; i < 5; i++) {
-            for(int k = 0; k < 4; k++) {
-                ImageView imageView = new ImageView(new Image(((List) images).get(k).toString()));
-
-                imageView.fitWidthProperty().bind(heightProperty.divide(5));//.set(0.8 * (width / 5));
-                imageView.fitHeightProperty().bind(heightProperty.divide(5));//.set(0.8 * (height / 4));
+                cardImageViewMap.put(cards.get(index), imageView);
+                imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, clickOnCardHandler(cards.get(index), imageView));
 
                 GridPane.setMargin(imageView, new Insets(10));
                 fieldGridPane.add(imageView, i, k);
+
+                index++;
             }
         }
 
         fieldGridPane.setAlignment(Pos.CENTER);
         mainBorderPane.setCenter(fieldGridPane);
+    }
+
+    private EventHandler clickOnCardHandler(Card card, ImageView imageView) {
+        return e -> {
+
+        };
     }
 }
