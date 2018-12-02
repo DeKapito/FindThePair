@@ -15,6 +15,7 @@ public class PlayField {
     private ImageOpener imageOpener;
 
     private List<Card> cards;
+    private Card lastSelectedCard;
 
     public PlayField(int numberOfCardsHorizontal, int numberOfCardsVertical) {
         this.numberOfCardsHorizontal = numberOfCardsHorizontal;
@@ -43,6 +44,20 @@ public class PlayField {
         if(!cards.contains(card) || card.isFound())
             return;
 
+        if(lastSelectedCard == null) {
+            lastSelectedCard = card;
+            return;
+        }
+
+        if(card.getCardUuid().equals(lastSelectedCard.getCardUuid()))
+            return;
+
+        if(card.getCardId() == lastSelectedCard.getCardId()) {
+            lastSelectedCard = null;
+            card.setFound(true);
+        } else {
+            lastSelectedCard = null;
+        }
     }
 
     public int getNumberOfCardsHorizontal() {
@@ -55,5 +70,9 @@ public class PlayField {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Image getHiddenCardImage() {
+        return imageOpener.getHiddenCardImage();
     }
 }

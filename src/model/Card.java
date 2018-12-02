@@ -2,15 +2,19 @@ package model;
 
 import javafx.scene.image.Image;
 
+import java.util.UUID;
+
 public class Card {
     private int cardId;
     private Image imageFile;
     private boolean isFound;
+    private UUID cardUuid;
 
     public Card(int cardId, Image imageFile) {
         this.cardId = cardId;
         this.imageFile = imageFile;
         this.isFound = false;
+        cardUuid = UUID.randomUUID();
     }
 
     public int getCardId() {
@@ -19,6 +23,10 @@ public class Card {
 
     public void setCardId(int cardId) {
         this.cardId = cardId;
+    }
+
+    public UUID getCardUuid() {
+        return cardUuid;
     }
 
     public Image getImageFile() {

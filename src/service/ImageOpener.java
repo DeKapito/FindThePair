@@ -1,5 +1,7 @@
 package service;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -11,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class ImageOpener {
     private static final String IMAGES_FOLDER = "../resources/images";
-    private final static Logger logger = Logger.getLogger(ImageOpener.class.getName());
+    private static final String HIDDEN_IMAGE_PATH = "resources/hidden-img.png";
 
     public List<URI> getCardImages() {
 
@@ -29,5 +31,9 @@ public class ImageOpener {
         Arrays.stream(imageFiles).forEach(image -> images.add(image.toURI()));
 
         return images;
+    }
+
+    public Image getHiddenCardImage() {
+        return new Image(HIDDEN_IMAGE_PATH);
     }
 }
