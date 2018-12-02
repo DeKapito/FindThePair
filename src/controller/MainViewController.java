@@ -6,8 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import model.Card;
+import service.ImageOpener;
 
+import java.net.URI;
 import java.util.List;
 
 public class MainViewController {
@@ -19,15 +20,21 @@ public class MainViewController {
 
     @FXML
     private void initialize() {
-        createGrid();
+        createGrid(600, 600);
     }
 
-    private void createGrid() {
+    private void createGrid(double height, double width) {
         fieldGridPane = new GridPane();
+
+        ImageOpener imageOpener = new ImageOpener();
+        List<URI> images = imageOpener.getCardImages();
 
         for (int i = 0; i < 2; i++) {
             for(int k = 0; k < 2; k++) {
-                ImageView imageView = new ImageView(new Image("resources/images/main-icon.png"));
+                ImageView imageView = new ImageView(new Image(((List) images).get(k).toString()));
+                imageView.setFitHeight(height / 2);
+                imageView.setFitWidth(width / 2);
+
                 fieldGridPane.add(imageView, i, k);
             }
         }
