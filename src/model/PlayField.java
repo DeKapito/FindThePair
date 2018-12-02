@@ -12,6 +12,7 @@ public class PlayField {
 
     private int numberOfCardsHorizontal;
     private int numberOfCardsVertical;
+
     private ImageOpener imageOpener;
 
     private List<Card> cards;
@@ -26,11 +27,11 @@ public class PlayField {
     }
 
     private List<Card> createCards() {
-        List<URI> images = imageOpener.getCardImages();
+        List<Image> images = imageOpener.getCardImages();
         List<Card> cards = new ArrayList<>();
 
         for(int i = 0; i < (numberOfCardsHorizontal * numberOfCardsVertical)/2; i++) {
-            Image image = new Image(images.get(i).toString());
+            Image image = images.get(i);
             cards.add(new Card(i, image));
             cards.add(new Card(i, image));
         }
@@ -59,6 +60,10 @@ public class PlayField {
         } else {
             lastSelectedCard = null;
         }
+    }
+
+    public boolean isFinish() {
+        return cards.stream().allMatch(Card::isFound);
     }
 
     public int getNumberOfCardsHorizontal() {

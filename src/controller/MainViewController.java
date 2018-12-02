@@ -49,7 +49,6 @@ public class MainViewController {
         int index = 0;
         for (int i = 0; i < playField.getNumberOfCardsHorizontal(); i++) {
             for(int k = 0; k < playField.getNumberOfCardsVertical(); k++) {
-                //ImageView imageView = new ImageView(cards.get(index).getImageFile());
                 ImageView imageView = new ImageView(playField.getHiddenCardImage());
                 imageView.fitWidthProperty().bind(heightProperty.divide(5));
                 imageView.fitHeightProperty().bind(heightProperty.divide(5));
@@ -76,6 +75,11 @@ public class MainViewController {
             new Thread(() -> {
                 if(playField.getLastSelectedCard() == null) {
                     fieldGridPane.setDisable(true);
+
+                    //TODO: show finish dialog
+                    if(playField.isFinish()) {
+                        System.out.println("You won");
+                    }
 
                     try {
                         Thread.sleep(700);
