@@ -35,7 +35,7 @@ public class MainViewController {
     private Map<Card, ImageView> cardImageViewMap = new HashMap<>();
 
     public MainViewController() {
-        playField = new PlayField(4, 2);
+        playField = new PlayField(5, 4);
         cards = playField.getCards();
     }
 

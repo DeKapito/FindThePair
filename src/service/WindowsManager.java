@@ -10,11 +10,18 @@ import java.io.IOException;
 
 public class WindowsManager {
 
+    private static final String MAIN_MENU_WINDOW_VIEW = "/view/MainMenu.fxml";
     private static final String PLAY_WINDOW_VIEW = "/view/MainView.fxml";
     private static final String FINISH_GAME_WINDOW_VIEW = "/view/FinishGame.fxml";
 
     private static final String MAIN_ICON_PATH = "resources/main-icon.png";
-    private static final String WINDOWS_TITLE = "FindTheCouples";
+    private static final String WINDOWS_TITLE = "FindThePair";
+
+    public static void showMainMenuWindow() {
+        Stage stage = loadWindow(WINDOWS_TITLE, MAIN_MENU_WINDOW_VIEW);
+        stage.setResizable(false);
+        stage.show();
+    }
 
     public static void showPlayWindow() {
         Stage stage = loadWindow(WINDOWS_TITLE, PLAY_WINDOW_VIEW);
