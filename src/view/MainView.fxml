@@ -10,17 +10,20 @@
 <?import javafx.scene.control.Label?>
 
 
-<BorderPane id="mainBorderPane" fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainViewController">
-   <bottom>
-      <FlowPane prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Score">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="scoreLabel" />
-         </children>
-      </FlowPane>
-   </bottom>
+<BorderPane id="mainBorderPane" fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: yellow;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MainViewController">
+    <bottom>
+        <FlowPane prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Score">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="scoreLabel"/>
+            </children>
+        </FlowPane>
+    </bottom>
 </BorderPane>

@@ -2,14 +2,8 @@ package service;
 
 import javafx.scene.image.Image;
 
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 public class ImageOpener {
     private static final String IMAGES_FOLDER = "resources/images/";
