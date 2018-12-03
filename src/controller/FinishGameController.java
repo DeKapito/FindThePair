@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import service.InformationSingleton;
 import service.WindowsManager;
 
 public class FinishGameController {
@@ -20,8 +21,12 @@ public class FinishGameController {
     @FXML
     private Button playAgainBtn;
 
+    private InformationSingleton informationSingleton;
+
     @FXML
     private void initialize() {
+        informationSingleton = InformationSingleton.getInformationSingleton();
+
         playAgainBtn.setOnAction(event -> {
             Stage stage = (Stage) playAgainBtn.getScene().getWindow();
             stage.close();
@@ -33,5 +38,7 @@ public class FinishGameController {
             stage.close();
             WindowsManager.showMainMenuWindow();
         });
+
+        resultErrorsLabel.setText(informationSingleton.getCountErrors().toString());
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Card;
 import model.PlayField;
+import service.InformationSingleton;
 import service.WindowsManager;
 
 import java.util.HashMap;
@@ -29,19 +30,24 @@ public class MainViewController {
     private Label scoreLabel;
 
     private GridPane fieldGridPane;
-
     private PlayField playField;
     private List<Card> cards;
     private Map<Card, ImageView> cardImageViewMap = new HashMap<>();
+    private InformationSingleton informationSingleton;
 
-    public MainViewController() {
-        playField = new PlayField(5, 4);
-        cards = playField.getCards();
-    }
 
     @FXML
     private void initialize() {
+        informationSingleton = InformationSingleton.getInformationSingleton();
+        playField = new PlayField(informationSingleton.getNumberOfCardsHorizontal(), informationSingleton.getNumberOfCardsVertical());
+        cards = playField.getCards();
+
         Platform.runLater(() -> createGrid(playField, mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty()));
+        startGame();
+    }
+
+    private void startGame() {
+        informationSingleton.resetCountErrors();
     }
 
     private void createGrid(PlayField playField, ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {

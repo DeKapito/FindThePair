@@ -2,8 +2,8 @@ package model;
 
 import javafx.scene.image.Image;
 import service.ImageOpener;
+import service.InformationSingleton;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +14,7 @@ public class PlayField {
     private int numberOfCardsVertical;
 
     private ImageOpener imageOpener;
+    private InformationSingleton informationSingleton;
 
     private List<Card> cards;
     private Card lastSelectedCard;
@@ -22,6 +23,7 @@ public class PlayField {
         this.numberOfCardsHorizontal = numberOfCardsHorizontal;
         this.numberOfCardsVertical = numberOfCardsVertical;
 
+        informationSingleton = InformationSingleton.getInformationSingleton();
         imageOpener = new ImageOpener();
         cards = createCards();
     }
@@ -59,6 +61,7 @@ public class PlayField {
             lastSelectedCard = null;
         } else {
             lastSelectedCard = null;
+            informationSingleton.incrementCountErrors();
         }
     }
 
