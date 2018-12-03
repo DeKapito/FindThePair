@@ -11,8 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.Card;
 import model.PlayField;
+import service.WindowsManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +35,7 @@ public class MainViewController {
     private Map<Card, ImageView> cardImageViewMap = new HashMap<>();
 
     public MainViewController() {
-        playField = new PlayField(5, 4);
+        playField = new PlayField(4, 2);
         cards = playField.getCards();
     }
 
@@ -76,11 +78,6 @@ public class MainViewController {
                 if(playField.getLastSelectedCard() == null) {
                     fieldGridPane.setDisable(true);
 
-                    //TODO: show finish dialog
-                    if(playField.isFinish()) {
-                        System.out.println("You won");
-                    }
-
                     try {
                         Thread.sleep(700);
                     } catch (InterruptedException ex) {
@@ -95,6 +92,12 @@ public class MainViewController {
                     fieldGridPane.setDisable(false);
                 }
             }).start();
+
+            if(playField.isFinish()) {
+                Stage stage = (Stage)imageView.getScene().getWindow();
+                stage.close();
+                WindowsManager.showFinishGameWindow();
+            }
         };
     }
 }
