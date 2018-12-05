@@ -9,11 +9,15 @@ public class InformationSingleton {
     private int numberOfCardsHorizontal;
     private int numberOfCardsVertical;
     private IntegerProperty countErrors;
+    private IntegerProperty score;
+    private long startTime;
+    private long endTime;
 
     private InformationSingleton() {
         numberOfCardsHorizontal = 2;
         numberOfCardsVertical = 2;
         countErrors = new SimpleIntegerProperty(0);
+        score = new SimpleIntegerProperty(0);
     }
 
     public static InformationSingleton getInformationSingleton() {
@@ -32,10 +36,6 @@ public class InformationSingleton {
         countErrors.set(0);
     }
 
-    public Integer getCountErrors() {
-        return countErrors.getValue();
-    }
-
     public IntegerProperty getCountErrorsProperty() {
         return countErrors;
     }
@@ -51,5 +51,33 @@ public class InformationSingleton {
 
     public int getNumberOfCardsVertical() {
         return numberOfCardsVertical;
+    }
+
+    public void incrementScore() {
+        score.set(score.get() + 1);
+    }
+
+    public IntegerProperty getScoreProperty() {
+        return score;
+    }
+
+    public void resetScore() {
+        score.set(0);
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }

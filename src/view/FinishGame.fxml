@@ -21,7 +21,7 @@
                         <Font name="Arial" size="36.0" />
                     </font>
                 </Label>
-                <Label fx:id="resultTimeLabel" layoutX="236.0" layoutY="45.0" prefHeight="53.0" prefWidth="131.0" text="13 s" textFill="#4fb4d0">
+                <Label fx:id="resultTimeLabel" layoutX="236.0" layoutY="45.0" prefHeight="53.0" prefWidth="325.0" text="13 s" textFill="#4fb4d0">
                     <font>
                         <Font size="36.0" />
                     </font>
@@ -31,8 +31,8 @@
                         <Font size="36.0" />
                     </font>
                 </Label>
-                <Button fx:id="mainMenuBtn" layoutX="336.0" layoutY="201.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="168.0" text="Main Menu" />
-                <Button fx:id="playAgainBtn" layoutX="109.0" layoutY="201.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="168.0" text="Play Again" />
+                <Button fx:id="mainMenuBtn" layoutX="336.0" layoutY="201.0" mnemonicParsing="false" onAction="#mainMenuBtnOnAction" prefHeight="53.0" prefWidth="168.0" text="Main Menu" />
+                <Button fx:id="playAgainBtn" layoutX="109.0" layoutY="201.0" mnemonicParsing="false" onAction="#playAgainBtnOnAction" prefHeight="53.0" prefWidth="168.0" text="Play Again" />
             </children>
         </AnchorPane>
         <Label layoutX="113.0" layoutY="14.0" prefHeight="71.0" prefWidth="362.0" text="Congratulations!" textFill="WHITE">

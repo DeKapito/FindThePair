@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -36,7 +37,6 @@ public class MainMenuController {
         numberOfCardsHorizontal = numCardsHorChoiceBox.getValue();
         numberOfCardsVertical = numCardsVerChoiceBox.getValue();
 
-        //TODO: Make the methods for buttons
         numCardsVerChoiceBox.setOnAction(event -> {
             numberOfCardsHorizontal = numCardsHorChoiceBox.getValue();
             numberOfCardsVertical = numCardsVerChoiceBox.getValue();
@@ -49,15 +49,16 @@ public class MainMenuController {
             }
         });
         numCardsHorChoiceBox.setOnAction(numCardsVerChoiceBox.getOnAction());
+    }
 
-        playGameBtn.setOnAction(event -> {
-            InformationSingleton informationSingleton = InformationSingleton.getInformationSingleton();
-            informationSingleton.setNumberOfCards(numberOfCardsHorizontal, numberOfCardsVertical);
+    @FXML
+    private void playGameBtnAction(ActionEvent event) {
+        InformationSingleton informationSingleton = InformationSingleton.getInformationSingleton();
+        informationSingleton.setNumberOfCards(numberOfCardsHorizontal, numberOfCardsVertical);
 
-            Stage stage = (Stage) playGameBtn.getScene().getWindow();
-            stage.close();
-            WindowsManager.showPlayWindow();
-        });
+        Stage stage = (Stage) playGameBtn.getScene().getWindow();
+        stage.close();
+        WindowsManager.showPlayWindow();
     }
 
     public boolean checkConfiguration(int horizontal, int vertical) {

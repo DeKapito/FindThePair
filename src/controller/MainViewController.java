@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -18,9 +17,7 @@ import model.PlayField;
 import service.InformationSingleton;
 import service.WindowsManager;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static javafx.beans.binding.Bindings.format;
 
@@ -35,11 +32,15 @@ public class MainViewController {
     @FXML
     private Label errorsCountLabel;
 
+    @FXML
+    private Label timeLabel;
+
     private GridPane fieldGridPane;
     private PlayField playField;
     private List<Card> cards;
     private Map<Card, ImageView> cardImageViewMap = new HashMap<>();
     private InformationSingleton informationSingleton;
+    private Timer timer;
 
 
     @FXML
@@ -47,15 +48,44 @@ public class MainViewController {
         informationSingleton = InformationSingleton.getInformationSingleton();
         playField = new PlayField(informationSingleton.getNumberOfCardsHorizontal(), informationSingleton.getNumberOfCardsVertical());
         cards = playField.getCards();
+        timer = new Timer();
 
         errorsCountLabel.textProperty().bind(format("%d", informationSingleton.getCountErrorsProperty()));
+        scoreLabel.textProperty()
+                .bind(
+                        format("%d/%d", informationSingleton.getScoreProperty(),
+                                informationSingleton.getNumberOfCardsHorizontal() * informationSingleton.getNumberOfCardsVertical() / 2
+                ));
 
-        Platform.runLater(() -> createGrid(playField, mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty()));
+        Platform.runLater(() -> {
+            Stage stage = (Stage) scoreLabel.getScene().getWindow();
+            stage.setOnCloseRequest((event) -> timer.cancel());
+            createGrid(playField, mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty());
+        });
         startGame();
     }
 
     private void startGame() {
         informationSingleton.resetCountErrors();
+        informationSingleton.resetScore();
+        informationSingleton.setStartTime(System.currentTimeMillis() / 1000);
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    informationSingleton.setEndTime(System.currentTimeMillis() / 1000);
+                    timeLabel.setText(String.valueOf(informationSingleton.getEndTime() - informationSingleton.getStartTime()));
+                });
+            }
+        }, 0, 1000);
+    }
+
+    private void stopGame() {
+        Stage stage = (Stage)scoreLabel.getScene().getWindow();
+        stage.close();
+        timer.cancel();
+        WindowsManager.showFinishGameWindow();
     }
 
     private void createGrid(PlayField playField, ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
@@ -112,9 +142,7 @@ public class MainViewController {
             }).start();
 
             if(playField.isFinish()) {
-                Stage stage = (Stage)imageView.getScene().getWindow();
-                stage.close();
-                WindowsManager.showFinishGameWindow();
+                stopGame();
             }
         };
     }

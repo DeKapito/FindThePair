@@ -59,6 +59,7 @@ public class PlayField {
             card.setFound(true);
             lastSelectedCard.setFound(true);
             lastSelectedCard = null;
+            informationSingleton.incrementScore();
         } else {
             lastSelectedCard = null;
             informationSingleton.incrementCountErrors();
