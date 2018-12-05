@@ -1,16 +1,19 @@
 package service;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class InformationSingleton {
 
     private static InformationSingleton informationSingleton;
     private int numberOfCardsHorizontal;
     private int numberOfCardsVertical;
-    private int countErrors;
+    private IntegerProperty countErrors;
 
     private InformationSingleton() {
         numberOfCardsHorizontal = 2;
         numberOfCardsVertical = 2;
-        countErrors = 0;
+        countErrors = new SimpleIntegerProperty(0);
     }
 
     public static InformationSingleton getInformationSingleton() {
@@ -22,14 +25,18 @@ public class InformationSingleton {
     }
 
     public void incrementCountErrors() {
-        countErrors++;
+        countErrors.set(countErrors.get() + 1);
     }
 
     public void resetCountErrors() {
-        countErrors = 0;
+        countErrors.set(0);
     }
 
     public Integer getCountErrors() {
+        return countErrors.getValue();
+    }
+
+    public IntegerProperty getCountErrorsProperty() {
         return countErrors;
     }
 

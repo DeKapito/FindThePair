@@ -15,6 +15,7 @@ public class WindowsManager {
     private static final String FINISH_GAME_WINDOW_VIEW = "/view/FinishGame.fxml";
 
     private static final String MAIN_ICON_PATH = "resources/main-icon.png";
+    private static final String STYLESHEET_PATH = "resources/styles.css";
     private static final String WINDOWS_TITLE = "FindThePair";
 
     public static void showMainMenuWindow() {
@@ -44,6 +45,7 @@ public class WindowsManager {
             fxmlLoader.setLocation(WindowsManager.class.getResource(viewPath));
             Parent parent = fxmlLoader.load();
             Scene scene = new Scene(parent);
+            scene.getStylesheets().add(STYLESHEET_PATH);
             stage.setScene(scene);
 
             return stage;

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -21,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static javafx.beans.binding.Bindings.format;
+
 public class MainViewController {
 
     @FXML
@@ -28,6 +31,9 @@ public class MainViewController {
 
     @FXML
     private Label scoreLabel;
+
+    @FXML
+    private Label errorsCountLabel;
 
     private GridPane fieldGridPane;
     private PlayField playField;
@@ -42,6 +48,8 @@ public class MainViewController {
         playField = new PlayField(informationSingleton.getNumberOfCardsHorizontal(), informationSingleton.getNumberOfCardsVertical());
         cards = playField.getCards();
 
+        errorsCountLabel.textProperty().bind(format("%d", informationSingleton.getCountErrorsProperty()));
+
         Platform.runLater(() -> createGrid(playField, mainBorderPane.getScene().widthProperty(), mainBorderPane.getScene().heightProperty()));
         startGame();
     }
@@ -53,13 +61,17 @@ public class MainViewController {
     private void createGrid(PlayField playField, ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
         fieldGridPane = new GridPane();
         fieldGridPane.setPadding(new Insets(10));
+        fieldGridPane.setStyle("-fx-background-color: #58D3F7");
+
+        int numberOfCardsH = playField.getNumberOfCardsHorizontal();
+        int numberOfCardsV = playField.getNumberOfCardsVertical();
 
         int index = 0;
-        for (int i = 0; i < playField.getNumberOfCardsHorizontal(); i++) {
-            for(int k = 0; k < playField.getNumberOfCardsVertical(); k++) {
+        for (int i = 0; i < numberOfCardsH; i++) {
+            for(int k = 0; k < numberOfCardsV; k++) {
                 ImageView imageView = new ImageView(playField.getHiddenCardImage());
-                imageView.fitWidthProperty().bind(heightProperty.divide(5));
-                imageView.fitHeightProperty().bind(heightProperty.divide(5));
+                imageView.fitWidthProperty().bind(heightProperty.divide(numberOfCardsV + 1));
+                imageView.fitHeightProperty().bind(heightProperty.divide(numberOfCardsV + 1));
 
                 cardImageViewMap.put(cards.get(index), imageView);
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, clickOnCardHandler(cards.get(index), imageView));

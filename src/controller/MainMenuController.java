@@ -36,6 +36,7 @@ public class MainMenuController {
         numberOfCardsHorizontal = numCardsHorChoiceBox.getValue();
         numberOfCardsVertical = numCardsVerChoiceBox.getValue();
 
+        //TODO: Make the methods for buttons
         numCardsVerChoiceBox.setOnAction(event -> {
             numberOfCardsHorizontal = numCardsHorChoiceBox.getValue();
             numberOfCardsVertical = numCardsVerChoiceBox.getValue();
