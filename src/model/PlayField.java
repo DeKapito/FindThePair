@@ -3,6 +3,7 @@ package model;
 import javafx.scene.image.Image;
 import service.ImageOpener;
 import service.InformationSingleton;
+import service.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class PlayField {
 
     private ImageOpener imageOpener;
     private InformationSingleton informationSingleton;
+    private SoundPlayer soundPlayer;
 
     private List<Card> cards;
     private Card lastSelectedCard;
@@ -25,6 +27,7 @@ public class PlayField {
 
         informationSingleton = InformationSingleton.getInformationSingleton();
         imageOpener = new ImageOpener();
+        soundPlayer = new SoundPlayer();
         cards = createCards();
     }
 
@@ -49,19 +52,23 @@ public class PlayField {
 
         if(lastSelectedCard == null) {
             lastSelectedCard = card;
+            soundPlayer.playFlipCard();
             return;
         }
 
         if(card.getCardUuid().equals(lastSelectedCard.getCardUuid()))
             return;
 
+        soundPlayer.playFlipCard();
         if(card.getCardId() == lastSelectedCard.getCardId()) {
             card.setFound(true);
             lastSelectedCard.setFound(true);
             lastSelectedCard = null;
             informationSingleton.incrementScore();
+            soundPlayer.playSuccess();
         } else {
             lastSelectedCard = null;
+            soundPlayer.playFail();
             informationSingleton.incrementCountErrors();
         }
     }

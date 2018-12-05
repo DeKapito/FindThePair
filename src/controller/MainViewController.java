@@ -51,11 +51,9 @@ public class MainViewController {
         timer = new Timer();
 
         errorsCountLabel.textProperty().bind(format("%d", informationSingleton.getCountErrorsProperty()));
-        scoreLabel.textProperty()
-                .bind(
-                        format("%d/%d", informationSingleton.getScoreProperty(),
-                                informationSingleton.getNumberOfCardsHorizontal() * informationSingleton.getNumberOfCardsVertical() / 2
-                ));
+        scoreLabel.textProperty().bind(
+                format("%d/%d", informationSingleton.getScoreProperty(),
+                        informationSingleton.getNumberOfCardsHorizontal() * informationSingleton.getNumberOfCardsVertical() / 2));
 
         Platform.runLater(() -> {
             Stage stage = (Stage) scoreLabel.getScene().getWindow();

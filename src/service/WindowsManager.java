@@ -32,6 +32,7 @@ public class WindowsManager {
 
     public static void showFinishGameWindow() {
         Stage stage = loadWindow(WINDOWS_TITLE, FINISH_GAME_WINDOW_VIEW);
+        stage.setResizable(false);
         stage.show();
     }
 
